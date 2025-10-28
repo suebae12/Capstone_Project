@@ -17,17 +17,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.http import JsonResponse
+from django.shortcuts import render
 from rest_framework.routers import DefaultRouter
 from users.views import UserViewSet
-from tasks.views import TaskViewSet
+from tasks.views import TaskViewSet, task_list_html
 
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'tasks', TaskViewSet)  
 
-# Root view to show available endpoints
+# Root view to show welcome page
 def api_root(request):
+    return render(request, 'base.html')
+
+# API documentation endpoint for JSON response
+def api_docs(request):
     return JsonResponse({
         'message': 'Task Manager API',
         'version': '1.0',
@@ -59,6 +64,8 @@ def api_root(request):
 #this is the url that helps us with authentication
 urlpatterns = [
     path('', api_root, name='root'),
+    path('api-docs/', api_docs, name='api-docs'),  # JSON documentation
+    path('tasks/', task_list_html, name='tasks-html'),  # Mobile-friendly task list
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls'))

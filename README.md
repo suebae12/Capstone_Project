@@ -274,7 +274,4 @@ You can test the API using:
 
 This is a capstone project demonstrating backend development skills with Django and Django REST Framework.
 
-## License
-
-This project is for educational purposes.
 

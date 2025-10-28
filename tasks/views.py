@@ -1,6 +1,8 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from .models import Task
 from .serializers import TaskSerializer
 
@@ -69,3 +71,16 @@ class TaskViewSet(viewsets.ModelViewSet):
         task.status = task_status
         task.save()
         return Response(TaskSerializer(task).data)
+
+
+# Custom HTML view for mobile-friendly task display
+@login_required
+def task_list_html(request):
+    """Render beautiful mobile-friendly task list"""
+    tasks = Task.objects.filter(user=request.user).order_by('-due_date')
+    
+    context = {
+        'tasks': tasks
+    }
+    
+    return render(request, 'tasks/task_list.html', context)

@@ -59,7 +59,7 @@ ROOT_URLCONF = 'taskmanager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'taskmanager' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,7 +132,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Authentication Settings
 LOGIN_URL = '/api-auth/login/'
-LOGIN_REDIRECT_URL = '/api/tasks/'  # Redirect to tasks after login
+LOGIN_REDIRECT_URL = '/tasks/'  # Redirect to beautiful tasks page after login
 LOGOUT_REDIRECT_URL = '/'  # Redirect to home after logout
 
 # Django REST Framework configuration
